@@ -43,7 +43,7 @@ public class Main {
 
         //======================== INPUT ==========================================
 
-        String input="My steak was SOFT but cooked exactly how I like it";
+        String input="Kejriwal refuses to sack Somnath Bharti, says he is innocent";//"My steak was SOFT but cooked exactly how I like it";
 
         System.out.println(input+"\n");
         // ========================================================================

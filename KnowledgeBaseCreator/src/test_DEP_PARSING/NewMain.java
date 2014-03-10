@@ -52,7 +52,7 @@ public class NewMain {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        String input="I watched the movie yesterday with my friends.";
+        String input="CM of Delhi refuses to sack Somnath Bharti, says he is innocent";//"I watched the movie yesterday with my friends.";
 
         System.out.println(input);
         Tree tree = new NewMain().parse(input);

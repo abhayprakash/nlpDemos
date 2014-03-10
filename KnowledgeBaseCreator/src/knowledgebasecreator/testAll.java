@@ -31,63 +31,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Vector;
 
 /**
  *
  * @author Abhay Prakash
  */
-public class KnowledgeBaseCreator {
-
-    /**
-     * @param args the command line arguments
-     */
+public class testAll {
     public static void main(String[] args) throws IOException {
-        String headLine = "Preeti not insecure of Abhay Deol romancing other female actors";
-        Vector<String> entities = getEntities(headLine);
-        System.out.println("Entities:");
-        for(String st : entities)
-        {
-            System.out.println(st);
-        }
-    }
+    // creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution 
+    Properties props = new Properties();
+    props.put("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
+    StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
     
-    static Vector<String> getEntities(String s)
-    {
-        Vector<String> toret = new Vector<>();
-        Properties props = new Properties();
-        props.put("annotators","tokenize, ssplit, pos, lemma, ner");
-        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
-        
-        Annotation document = new Annotation(s);
-        pipeline.annotate(document);
-        
-        List<CoreMap> sentences = document.get(SentencesAnnotation.class);
-        for(CoreMap sentence: sentences)
-        {
-            for(CoreLabel token : sentence.get(TokensAnnotation.class))
-            {
-                String possibleEntity = "";// = token.get(TextAnnotation.class);
-                String pos = token.get(PartOfSpeechAnnotation.class);
-                while(pos.equals("NNP") || pos.equals("NN"))
-                {
-                    System.out.println(token.get(TextAnnotation.class));
-                    possibleEntity += token.get(TextAnnotation.class);
-                    
-                    token : sentence.get(TokensAnnotation.class);
-                    pos = token.get(PartOfSpeechAnnotation.class);
-                }
-                if(!possibleEntity.equals(""))
-                {
-                    toret.add(possibleEntity);
-                }
-            }
-        }
-        return toret;
-    }
-}
+    // read some text from the file..
+    String text = "BJP, Congress trying to topple our government, say AAP leaders";
 
-/*
+    // create an empty Annotation just with the given text
+    Annotation document = new Annotation(text);
+
+    // run all Annotators on this text
+    pipeline.annotate(document);
+
+    // these are all the sentences in this document
+    // a CoreMap is essentially a Map that uses class objects as keys and has values with custom types
+    List<CoreMap> sentences = document.get(SentencesAnnotation.class);
+
+    for(CoreMap sentence: sentences) {
+      // traversing the words in the current sentence
+      // a CoreLabel is a CoreMap with additional token-specific methods
+      for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
+        // this is the text of the token
         String word = token.get(TextAnnotation.class);
         // this is the POS tag of the token
         String pos = token.get(PartOfSpeechAnnotation.class);
@@ -110,7 +83,9 @@ public class KnowledgeBaseCreator {
     // Each chain stores a set of mentions that link to each other,
     // along with a method for getting the most representative mention
     // Both sentence and token offsets start at 1!
-    Map<Integer, CorefChain> graph = document.get(CorefChainAnnotation.class); 
+    Map<Integer, CorefChain> graph = 
+        document.get(CorefChainAnnotation.class);
+    
   }
+
 }
-*/

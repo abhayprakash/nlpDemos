@@ -47,7 +47,7 @@ public class Main {
         for (CoreMap sentence : sentences) {
             for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
                 String ne = token.get(NamedEntityTagAnnotation.class);
-                System.out.println(ne);
+                //System.out.println(ne);
                 if(!ne.toString().equals("O"))
                    System.out.println(ne.toString()+" ----> "+count);
                 count++;
