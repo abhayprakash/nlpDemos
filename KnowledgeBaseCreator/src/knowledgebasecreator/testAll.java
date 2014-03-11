@@ -44,7 +44,7 @@ public class testAll {
     StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
     
     // read some text from the file..
-    String text = "BJP, Congress trying to topple our government, say AAP leaders";
+    String text = "Preeti not insecure of Abhay Deol romancing other female actors";//"BJP, Congress trying to topple our government, say AAP leaders";
 
     // create an empty Annotation just with the given text
     Annotation document = new Annotation(text);
