@@ -85,16 +85,17 @@ public class KnowledgeBaseCreator {
             for(int i = 0; i <  tokens_ListSize ; i++ )
             {
                 String possibleEntity = "";
-                String pos = "";
                 token = tokens.get(i);
-                pos = token.get(PartOfSpeechAnnotation.class);
-                while(pos.equals("NNP") || pos.equals("NN")){
+                String pos = token.get(PartOfSpeechAnnotation.class);
+                String ner = token.get(NamedEntityTagAnnotation.class);
+                while(pos.equals("NNP") || (pos.equals("NN") && !ner.equals("O"))){
                     possibleEntity += " " + token.get(TextAnnotation.class);
                     i++;
                     if(i == tokens_ListSize)
                         break;
                     token = tokens.get(i);
                     pos = token.get(PartOfSpeechAnnotation.class);
+                    ner = token.get(NamedEntityTagAnnotation.class);
                 }
                
                 if(!possibleEntity.equals(""))
