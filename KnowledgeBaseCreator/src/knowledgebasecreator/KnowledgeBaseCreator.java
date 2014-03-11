@@ -25,6 +25,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -43,13 +44,25 @@ public class KnowledgeBaseCreator {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        String headLine = "Preeti not insecure of Abhay Deol romancing other female actors";
-        Vector<String> entities = getEntities(headLine);
-        System.out.println("Entities:");
-        for(String st : entities)
-        {
-            System.out.println(st);
+        File inputFile = new File("C:\\Users\\Abhay Prakash\\NewsDataAnalytics\\KnowledgeBase\\headlines.txt");
+        BufferedReader br = new BufferedReader(new FileReader(inputFile));
+        String headline;
+        
+        PrintWriter writer = new PrintWriter("C:\\Users\\Abhay Prakash\\NewsDataAnalytics\\KnowledgeBase\\entities.txt", "UTF-8");
+        
+        while ((headline = br.readLine()) != null) {
+            System.out.println(headline);
+            writer.println("Original : " + headline);
+            //headline = "India is being forced to reconsider how it views the neglected North-east";
+            Vector<String> entities = getEntities(headline);
+            writer.println("Entities:");
+            for(String st : entities)
+            {
+                writer.println("\t" + st);
+            }
         }
+        br.close();
+        writer.close();
     }
     
     static Vector<String> getEntities(String s)
@@ -76,8 +89,10 @@ public class KnowledgeBaseCreator {
                 token = tokens.get(i);
                 pos = token.get(PartOfSpeechAnnotation.class);
                 while(pos.equals("NNP") || pos.equals("NN")){
-                    possibleEntity += token.get(TextAnnotation.class);
+                    possibleEntity += " " + token.get(TextAnnotation.class);
                     i++;
+                    if(i == tokens_ListSize)
+                        break;
                     token = tokens.get(i);
                     pos = token.get(PartOfSpeechAnnotation.class);
                 }
